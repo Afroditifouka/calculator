@@ -3,72 +3,37 @@ import React, { Component } from 'react';
 import './App.css';
 
 class App extends Component {
-
   state = {
-    arr: Array(10).fill(0),
-    count: 0,
-    apotelesma: 0
+    apotelesma: 0,
+    num: '',
+    praksiAigain: true,
+    sum: 0
   }
 
   isClicked(key){
-    const { count, arr, apotelesma } = this.state
-    const tmpArr = arr
-    if (key !== '+' && key !== '-' && key !== 'x' && key !== '/' && key !== '=' && key !== 'ON' && key !== 'OFF') {
-      tmpArr[count] = key
-      console.log(tmpArr);
-      this.setState({arr: tmpArr, count: count + 1})
-      console.log(count);
-    } else {
-        if (key !== 'ON' && key !== 'OFF') {
-          num = tmpArr[0]*(10^(count - 1)) + tmpArr[1]*(10^(count - 2)) + tmpArr[2]*(10^(count - 3)) +
-          tmpArr[3]*(10^(count - 4)) + tmpArr[4]*(10^(count - 5)) + tmpArr[5]*(10^(count - 6)) +
-          tmpArr[6]*(10^(count - 7)) + tmpArr[7]*(10^(count - 8)) + tmpArr[8]*(10^(count - 9)) + tmpArr[9]*(10^(count - 10))
+    const praksis = ['+', '-', '*', '/']
+    const { sum, num, praksiAigain } = this.state
+    const isPraksi = praksis.find((praksi)=> key === praksi)
+    const isNumber = typeof key === 'number'
+    if (isNumber){
+      this.setState({num: num + key, praksiAigain: true})
+    }
+    if ( isPraksi && praksiAigain ) {
 
-          if (key = '+') {
-            action = 1
-            this.setState({apotelesma: num, count: 0})
-          }
-
-          if (key = '-') {
-            action = 2
-            this.setState({apotelesma: num , count: 0})
-          }
-
-          if (key = 'x') {
-            action = 3
-            this.setState({apotelesma: num, count: 0})
-          }
-
-          if (key = '/') {
-            action = 4
-            this.setState({apotelesma: num, count: 0})
-          }
-
-          if (key = '=') {
-            if action = 1 {this.setState({apotelesma: this.state.apotelesma + num, count: 0})}
-            if action = 2 {this.setState({apotelesma: this.state.apotelesma - num, count: 0})}
-            if action = 3 {this.setState({apotelesma: this.state.apotelesma * num, count: 0})}
-            if action = 4 {this.setState({apotelesma: this.state.apotelesma / num, count: 0})}
-          }
-
-        } else {
-            //on - off
-        }
+      this.setState({num: num + key, praksiAigain: false})
     }
   }
 
   render() {
+    const {num} = this.state
     return (
       <div>
+        <div className ="display">
+          <div className="up">{num}</div>
+          <div className="down">1+5+5</div>
+        </div>
+
         <table>
-
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-
           <tr>
             <td></td>
             <td></td>
@@ -94,7 +59,7 @@ class App extends Component {
             <td onClick = {()=>this.isClicked(1)}> 1 </td>
             <td onClick = {()=>this.isClicked(2)}> 2 </td>
             <td onClick = {()=>this.isClicked(3)}> 3 </td>
-            <td onClick = {()=>this.isClicked('x')}> x </td>
+            <td onClick = {()=>this.isClicked('*')}> x </td>
           </tr>
 
           <tr>
