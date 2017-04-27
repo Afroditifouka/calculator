@@ -7,25 +7,47 @@ class App extends Component {
     apotelesma: 0,
     num: '',
     praksiAigain: true,
+    currentNum: '',
     sum: 0
+  }
+
+  calculations(key){
+    const { sum, num, currentNum } = this.state
+    switch (key) {
+      case '+':
+        this.setState({sum: sum + parseInt(currentNum)})
+        break;
+      case '-':
+        this.setState({sum: sum + parseInt(currentNum)})
+        break;
+      case '*':
+        this.setState({sum: sum * parseInt(currentNum)})
+        break;
+      case '/':
+        this.setState({sum: sum / parseInt(currentNum)})
+        break;
+      default:
+
+    }
   }
 
   isClicked(key){
     const praksis = ['+', '-', '*', '/']
-    const { sum, num, praksiAigain } = this.state
+    const { sum, num, praksiAigain, currentNum } = this.state
     const isPraksi = praksis.find((praksi)=> key === praksi)
     const isNumber = typeof key === 'number'
     if (isNumber){
-      this.setState({num: num + key, praksiAigain: true})
+      this.setState({num: num + key, currentNum: currentNum + key, praksiAigain: true})
     }
     if ( isPraksi && praksiAigain ) {
-
-      this.setState({num: num + key, praksiAigain: false})
+      this.calculations(key)
+      this.setState({num: num + key, currentNum : '', praksiAigain: false})
     }
   }
 
   render() {
-    const {num} = this.state
+    const { num, sum } = this.state
+    console.log(sum);
     return (
       <div>
         <div className ="display">
